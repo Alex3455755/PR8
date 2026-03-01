@@ -4,6 +4,7 @@
 	
 	$login = $_POST['login'];
 	$password = $_POST['password'];
+	$email = $_POST['email'];
 
 	$password = password_hash($password, PASSWORD_DEFAULT);
 	
@@ -14,7 +15,7 @@
 	if($user_read = $query_user->fetch_row()) {
 		echo $id;
 	} else {
-		$mysqli->query("INSERT INTO `users`(`login`, `password`, `roll`) VALUES ('".$login."', '".$password."', 0)");
+		$mysqli->query("INSERT INTO `users`(`login`, `password`, `email`, `roll`) VALUES ('".$login."', '".$password."','".$email."', 0)");
 		
 		$query_user = $mysqli->query("SELECT * FROM `users` WHERE `login`='".$login."' AND `password`= '".$password."';");
 		$user_new = $query_user->fetch_row();

@@ -39,6 +39,8 @@
 				
 					<div class = "sub-name">Логин:</div>
 					<input name="_login" type="text" placeholder="" onkeypress="return PressToEnter(event)"/>
+					<div class = "sub-name">Email</div>
+					<input name="_email" type="email" placeholder="" onkeypress="return PressToEnter(event)"/>
 					<div class = "sub-name">Пароль:</div>
 					<input name="_password" type="password" placeholder="" onkeypress="return PressToEnter(event)"/>
 					<div class = "sub-name">Повторите пароль:</div>
@@ -63,11 +65,13 @@
 			
 			function RegIn() {
 				var _login = document.getElementsByName("_login")[0].value;
+				var _email = document.getElementsByName("_email")[0].value;
 				var _password = document.getElementsByName("_password")[0].value;
 				var _passwordCopy = document.getElementsByName("_passwordCopy")[0].value;
 				const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]+$/;
 				
 				if(_login != "") {
+					if(_email != "") {
 					if(_password != "" && regex.test(_password) && _password.length >= 8) {
 						if(_password == _passwordCopy) {
 							loading.style.display = "block";
@@ -76,6 +80,7 @@
 							var data = new FormData();
 							data.append("login", _login);
 							data.append("password", _password);
+							data.append("email",_email);
 							
 							// AJAX запрос
 							$.ajax({
@@ -110,6 +115,7 @@
 							});
 						} else alert("Пароли не совподают.");
 					} else alert("Введите пароль в котором есть заглавные и маленькие латинские буквы и цифры.");
+				}else alert("Введите email");
 				} else alert("Введите логин.");
 			}
 			

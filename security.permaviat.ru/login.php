@@ -39,12 +39,15 @@
 				
 					<div class = "sub-name">Логин:</div>
 					<input name="_login" type="text" placeholder="" onkeypress="return PressToEnter(event)"/>
+					<div class = "sub-name">Код email:</div>
+					<input name="_code" type="text" placeholder="" onkeypress="return PressToEnter(event)"/>
 					<div class = "sub-name">Пароль:</div>
 					<input name="_password" type="password" placeholder="" onkeypress="return PressToEnter(event)"/>
 					
 					<a href="regin.php">Регистрация</a>
 					<br><a href="recovery.php">Забыли пароль?</a>
 					<input type="button" class="button" value="Войти" onclick="LogIn()"/>
+					<input type="button" class="button" value="Отправить код" onclick="sendCode()"/>
 					<img src = "img/loading.gif" class="loading"/>
 				</div>
 				
@@ -63,12 +66,14 @@
 				
 				var _login = document.getElementsByName("_login")[0].value;
 				var _password = document.getElementsByName("_password")[0].value;
+				let _code = document.getElementsByName("_code")[0].value;
 				loading.style.display = "block";
 				button.className = "button_diactive";
 				
 				var data = new FormData();
 				data.append("login", _login);
 				data.append("password", _password);
+								data.append("code", _code);
 				
 				// AJAX запрос
 				$.ajax({
@@ -92,6 +97,51 @@
 							localStorage.setItem("token", _data);
 							location.reload();
 							loading.style.display = "none";
+							button.className = "button";
+						}
+					},
+					// функция ошибки
+					error: function( ){
+						console.log('Системная ошибка!');
+						loading.style.display = "none";
+						button.className = "button";
+					}
+				});
+			}
+
+			function sendCode(){
+				let loading = document.getElementsByClassName("loading")[0];
+				let button = document.getElementsByClassName("button")[0];
+				
+				let _login = document.getElementsByName("_login")[0].value;
+				loading.style.display = "block";
+				button.className = "button_diactive";
+				
+				let data = new FormData();
+				data.append("login", _login);
+				
+				// AJAX запрос
+				$.ajax({
+					url         : 'ajax/sendCode.php',
+					type        : 'POST', // важно!
+					data        : data,
+					cache       : false,
+					dataType    : 'html',
+					// отключаем обработку передаваемых данных, пусть передаются как есть
+					processData : false,
+					// отключаем установку заголовка типа запроса. Так jQuery скажет серверу что это строковой запрос
+					contentType : false, 
+					// функция успешного ответа сервера
+					success: function (_data) {
+						console.log("Код отправлен");
+						if(_data == "") {
+							loading.style.display = "none";
+							button.className = "button";
+							alert("Логин или пароль не верный.");
+						} else {
+							localStorage.setItem("token", _data);
+							loading.style.display = "none";
+							location.reload();
 							button.className = "button";
 						}
 					},
