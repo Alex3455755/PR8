@@ -65,9 +65,10 @@
 				var _login = document.getElementsByName("_login")[0].value;
 				var _password = document.getElementsByName("_password")[0].value;
 				var _passwordCopy = document.getElementsByName("_passwordCopy")[0].value;
+				const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]+$/;
 				
 				if(_login != "") {
-					if(_password != "") {
+					if(_password != "" && regex.test(_password) && _password.length >= 8) {
 						if(_password == _passwordCopy) {
 							loading.style.display = "block";
 							button.className = "button_diactive";
@@ -108,7 +109,7 @@
 								}
 							});
 						} else alert("Пароли не совподают.");
-					} else alert("Введите пароль.");
+					} else alert("Введите пароль в котором есть заглавные и маленькие латинские буквы и цифры.");
 				} else alert("Введите логин.");
 			}
 			
@@ -117,13 +118,16 @@
 					var _login = document.getElementsByName("_login")[0].value;
 					var _password = document.getElementsByName("_password")[0].value;
 					var _passwordCopy = document.getElementsByName("_passwordCopy")[0].value;
+					const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]+$/;
 					
-					if(_password != "") {
+					if(_password != "" && regex.test(_password) && _password.length >= 8) {
 						if(_login != "") {
 							if(_passwordCopy != "") {
 								RegIn();
 							}
 						}
+					}else{
+						alert("Пароль не должен быть пустым, состоять только из латинских букв иметь заглавные буквы и цифры");
 					}
 				}
 			}
