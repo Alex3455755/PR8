@@ -47,7 +47,10 @@
 					<a href="regin.php">Регистрация</a>
 					<br><a href="recovery.php">Забыли пароль?</a>
 					<input type="button" class="button" value="Войти" onclick="LogIn()"/>
-					<input type="button" class="button" value="Отправить код" onclick="sendCode()"/>
+					<br>
+					<br>
+					<br>
+					<input type="button" class="button longButton" value="Код Email" onclick="sendCode()"/>
 					<img src = "img/loading.gif" class="loading"/>
 				</div>
 				

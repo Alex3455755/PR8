@@ -6,7 +6,12 @@
 		if($_SESSION['user'] != -1) {
 			$user_query = $mysqli->query("SELECT * FROM `users` WHERE `id` = ".$_SESSION['user']); // проверяем
 			while($user_read = $user_query->fetch_row()) {
-				if($user_read[3] == 0) header("Location: index.php");
+				if($user_read[5] != $_SESSION['token']){
+					session_destroy();
+					header("Refresh:0");
+				}else{
+					if($user_read[3] == 0) header("Location: index.php");
+				}
 			}
 		} else header("Location: login.php");
  	} else {
